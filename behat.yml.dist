@@ -1,0 +1,11 @@
+default:
+    paths:
+        features: features
+    suites:
+        default:
+            contexts:
+                - App\Tests\Behat\DemoContext
+
+    extensions:
+        FriendsOfBehat\SymfonyExtension: ~
+    

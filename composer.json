@@ -68,5 +68,10 @@
             "require": "6.1.*",
             "docker": true
         }
+    },
+    "require-dev": {
+        "behat/behat": "^3.11",
+        "friends-of-behat/mink-extension": "^2.7",
+        "friends-of-behat/symfony-extension": "^2.0"
     }
 }
