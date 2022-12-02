@@ -1,3 +1,7 @@
 {
-    "php.debug.ideKey": "VSCODE"
+    "php.debug.ideKey": "VSCODE",
+    "editor.formatOnSave": false,
+    "emmet.includeLanguages": {
+        "twig": "html"
+    }
 }
