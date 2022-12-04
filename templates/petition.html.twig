@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+
+    <title>OpenPetition</title>
+
+    <link rel="stylesheet" href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css"
+          media="all"/>
+    <link rel="stylesheet" href="{{ asset('style.css') }}" type="text/css" media="all"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body
+        class="page-template page-template-page-templates page-template-letter page-template-page-templatesletter-php page page-id-2 logged-in admin-bar no-customize-support multi-page"
+>
+<header id="header">
+    <nav id="main-nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 id="logo">OpenPetition</h1>
+                    <label
+                            class="toggle-nav-label visible-xs"
+                            for="toggle-main-nav"
+                    ></label>
+                    <input
+                            type="checkbox"
+                            id="toggle-main-nav"
+                            class="toggle-nav-input"
+                    />
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div id="content" class="clearfix">
+    <section
+            id="sample-page"
+            class="animated bg-lined-paper post-2 page type-page status-publish hentry animated_off"
+            style="opacity: 1; display: block; transform: translateY(0px)"
+    >
+        <div class="container">
+            <div class="row content-padding-lg">
+                <div class="col-sm-12 text-center">
+                    <h2 class="section-title">Сбор подписей за развитие общественного транспорта в Махачкале!</h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="letter-container">
+            <div class="container">
+                <div class="row content-padding-xs">
+                    <div
+                            class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-3"
+                    >
+                        <p>
+                            Главе Республики Дагестан
+                            Меликову С.А.
+                            <br/>
+							от
+                        </p>
+
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <input class="form-control" type="text" placeholder="Булгакова Михаила Афанасьевича">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-6">
+                                <input type="text" placeholder="Номер телефона" name="phone" class="form-control"
+                                       id="ex2">
+                            </div>
+                            <div class="col-xs-6">
+                                <input class="form-control" type="text" placeholder="E-mail" name="email">
+                            </div>
+                        </div>
+
+                        <p>
+                            Население Махачкалы постепенно приближается к миллиону человек. Однако состояние
+                            общественного транспорта города не соответствует потребностям жителей и гостей города.
+                            Существующая маршрутная сеть неэффективна и устарела, содержит много дублирующих маршрутов.
+                            Введение безналичной оплаты проезда происходит медленно.
+                        </p>
+                        <p>
+                            96% транспортного парка представлено микроавтобусами вместимостью до 22 посадочных мест. Они
+                            неудобны и не предназначены для маломобильных людей, доля которых в городе достигает 30%.
+                        </p>
+                        <p>
+                            Для правильного развития города необходима транспортная реформа, в которой требуется
+                            предусмотреть следующее:
+                        </p>
+                        <p>
+                            1. Разработка новой маршрутной сети с минимизацией дублирования маршрутов и реализации
+                            пересадочной модели;
+                        </p>
+                        <p>
+                            2. Переход на работу с перевозчиками по регулируемым тарифам на основе т.н.
+                            “брутто-контрактов” с оплатой перевозчику транспортной работы;
+                        </p>
+
+                        <div id="date_string"></div>
+
+                        <div class="wrapper">
+                            <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+                        </div>
+                        <div>
+                            <button class="btn btn-light" id="clear">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        };
+        let dateString = new Date().toLocaleString("ru", options);
+
+        let dateElement = document.getElementById('date_string');
+        dateElement.innerHTML = dateString;
+    </script>
+    <script>
+        var canvas = document.getElementById('signature-pad');
+
+        function resizeCanvas() {
+            var ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+        }
+
+        window.onresize = resizeCanvas;
+        resizeCanvas();
+
+        var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)'
+        });
+
+        document.getElementById('clear').addEventListener('click', function () {
+            signaturePad.clear();
+        });
+    </script>
+</div>
+</body>
+</html>
+
