@@ -9,7 +9,12 @@ parameters:
     app.sitemail: 'admin@example.com'
     app.siteowner_who: 'Иван Иванович Иванов'
     app.siteowner_by_whom: 'Иваном Ивановичем Ивановым'
-    app.siteowner_birthdate: '01.01.1999 г.'
+    app.siteowner_birthdate: '01.01.1111 г.'
+    app.petition_author_who: 'Петр Петрович Петров'
+    app.petition_author_to_whom: 'автору проекта "Галактический транспортный надзор" Петру Петровичу Петрову'
+    app.petition_author_birthdate: '02.02.2222 г.'
+    app.petition_target: 'Правительство галактики Млечный Путь'
+    app.petition_url: 'https://sign.example.com/galactic_transport'
 
 services:
     # default configuration for services in *this* file
