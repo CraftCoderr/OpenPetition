@@ -15,6 +15,10 @@ parameters:
     app.petition_author_birthdate: '02.02.2222 г.'
     app.petition_target: 'Правительство галактики Млечный Путь'
     app.petition_url: 'https://sign.example.com/galactic_transport'
+    app.petition_title: 'Сбор подписей за развитие общественного транспорта в Космосе!'
+    app.petition_subtitle: 'Каждое подписанное обращение будет распечатано и передано в Правительство галактики Млечный Путь.'
+    app.petition_target_to_whom: 'Педседателю Правительства галактики Млечный Путь Марсовому&nbsp;Р.Г.'
+    app.petition_text_file: 'petition.md'
 
 services:
     # default configuration for services in *this* file
