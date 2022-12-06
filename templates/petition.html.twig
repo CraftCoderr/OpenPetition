@@ -5,131 +5,250 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 
-		<title>OpenPetition</title>
+		<title>{{ petition_title }}</title>
 
-		<link rel="stylesheet" href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all"/>
-		<link rel="stylesheet" href="{{ asset('style.css') }}" type="text/css" media="all"/>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
 		<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
-		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Sans"/>
+
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon.png') }}">
+		<style type="text/css">
+			body {
+				font-family: 'PT Sans', sans-serif;
+			}
+			.splash-image {
+				background-position: 50% 50%;
+			}
+
+			@media(max-width: 768px) {
+				.splash-image {
+					min-height: 350px;
+				}
+			}
+
+			.petition-page {
+				background-color: #faf8de;
+				box-shadow: 0 11px 35px 5px rgb(64 20 18 / 58%);
+				padding: 48px 48px 64px 64px;
+			}
+
+			.petition-text {
+				text-align: justify;
+			}
+
+			.petition-text h1 {
+				font-size: 16px;
+				font-weight: bold;
+				text-align: center;
+			}
+
+			.petition-text h2 {
+				font-style: italic;
+				font-size: 16px;
+			}
+
+			@media(min-width: 992px) {
+				.petition-form-element {
+					width: 720px;
+				}
+			}
+
+			.form-input {
+				width: 100%;
+				height: 28px;
+				padding: 0 5px;
+				box-sizing: border-box;
+				border: 1px solid transparent;
+				border-bottom: 1px solid #ababab !important;
+				background-color: #fff;
+				font-size: 14px;
+				font-family: 'PT Sans', sans-serif;
+			}
+
+			.form-input:focus {
+				border: 1px solid #85beff;
+				outline: none;
+			}
+
+			.form-comment {
+				font-size: 16px;
+				line-height: 16px;
+				color: #7f7f7f;
+			}
+
+			.before-input {
+				position: absolute;
+				top: 8px;
+				left: -24px;
+			}
+
+			.signed {
+				text-align: left;
+			}
+			@media(max-width: 768px) {
+				.signed {
+					text-align: center;
+				}
+			}
+			.signed-header {
+				font-size: 22px;
+			}
+			.signed-body {
+				margin: -12px 0;
+				font-size: 46px;
+				font-weight: bold;
+			}
+			.signed-footer {
+				font-size: 18px;
+			}
+
+			.sign-wrapper {
+				max-width: 321px;
+			}
+
+			#sign_sketch {
+				border: 1px solid gray;
+			}
+
+			#sign_sketch {
+				position: relative;
+				width: 100%;
+				height: 136px;
+				margin-top: 15px;
+				padding: 5px;
+				box-sizing: border-box;
+				background-color: #fff;
+			}
+
+			.submit-button {
+				width: 100%;
+				font-size: 24px;
+				background-color: #5aa9e6;
+				font-weight: bold;
+				border: none;
+				opacity: .8;
+			}
+
+			.submit-button:hover {
+				opacity: 1;
+			}
+		</style>
 	</head>
-	<body class="page-template page-template-page-templates page-template-letter page-template-page-templatesletter-php page page-id-2 logged-in admin-bar no-customize-support multi-page">
-		<header id="header">
-			<nav id="main-nav">
-				<div class="container">
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6 py-5 px-5" style="background-color: #5aa9e6">
+					<h1>
+						<strong>{{ petition_title }}</strong>
+					</h1>
+					<h3 class="mt-3">
+						<strong>{{ petition_subtitle }}</strong>
+					</h3>
+				</div>
+				<div class="col-md-6 p-0 splash-image" style="background-image: url({{ asset('title-image-1024x683.jpg') }});"></div>
+			</div>
+			<div class="row justify-content-lg-center mt-5">
+				<div class="col-lg-8 petition-page petition-form-element">
 					<div class="row">
-						<div class="col-xs-12">
-							<h1 id="logo">OpenPetition</h1>
-							<label class="toggle-nav-label visible-xs" for="toggle-main-nav"></label>
-							<input type="checkbox" id="toggle-main-nav" class="toggle-nav-input"/>
+						<div class="col-md-6 signed">
+							<div class="signed-header">
+								<span>подписали</span>
+							</div>
+							<div class="signed-body">
+								<span>{{ people_signed }}</span>
+							</div>
+							<div class="signed-footer">
+								<span>человек</span>
+							</div>
+						</div>
+						<div class="col">
+							<div>
+								<span>{{ petition_target_to_whom|raw }}</span>
+							</div>
+							<div style="position: relative">
+								<div class="before-input">от</div>
+								<input name="fullname" type="" class="form-input mt-2" placeholder="Булгакова Михаила Афанасьевича">
+							</div>
+							<span class="form-comment">Впишите фамилию и имя</br>(отчество по желанию)</span>
+							<div>
+								<input name="email" type="" class="form-input mt-2" placeholder="e-mail">
+							</div>
+							<span class="form-comment">На этот адрес будет отправлен ответ</span>
 						</div>
 					</div>
-				</div>
-			</nav>
-		</header>
-
-		<div id="content" class="clearfix">
-			<section id="sample-page" class="animated bg-lined-paper post-2 page type-page status-publish hentry animated_off" style="opacity: 1; display: block; transform: translateY(0px)">
-				<div class="container">
-					<div class="row content-padding-lg">
-						<div class="col-sm-12 text-center">
-							<h2 class="section-title">Сбор подписей за развитие общественного транспорта в Махачкале!</h2>
-						</div>
+					<div class="row petition-text mt-4">
+						{{ petition_text|markdown_to_html }}
 					</div>
-				</div>
-
-				<div id="letter-container">
-					<div class="container">
-						<div class="row content-padding-xs">
-							<div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-3">
-								<p>
-									Главе Республики Дагестан
-																Меликову С.А.
-									<br/>
-									от
-								</p>
-
-								<div class="form-group row">
-									<div class="col-xs-6">
-										<input class="form-control" type="text" placeholder="Булгакова Михаила Афанасьевича">
-									</div>
-								</div>
-								<div class="form-group row">
-									<div class="col-xs-6">
-										<input type="text" placeholder="Номер телефона" name="phone" class="form-control" id="ex2">
-									</div>
-									<div class="col-xs-6">
-										<input class="form-control" type="text" placeholder="E-mail" name="email">
-									</div>
-								</div>
-
-								<p>
-									Население Махачкалы постепенно приближается к миллиону человек. Однако состояние
-																общественного транспорта города не соответствует потребностям жителей и гостей города.
-																Существующая маршрутная сеть неэффективна и устарела, содержит много дублирующих маршрутов.
-																Введение безналичной оплаты проезда происходит медленно.
-								</p>
-								<p>
-									96% транспортного парка представлено микроавтобусами вместимостью до 22 посадочных мест. Они
-																неудобны и не предназначены для маломобильных людей, доля которых в городе достигает 30%.
-								</p>
-								<p>
-									Для правильного развития города необходима транспортная реформа, в которой требуется
-																предусмотреть следующее:
-								</p>
-								<p>
-									1. Разработка новой маршрутной сети с минимизацией дублирования маршрутов и реализации
-																пересадочной модели;
-								</p>
-								<p>
-									2. Переход на работу с перевозчиками по регулируемым тарифам на основе т.н.
-																“брутто-контрактов” с оплатой перевозчику транспортной работы;
-								</p>
-
-								<div id="date_string"></div>
-
-								<div class="wrapper">
-									<canvas id="signature-pad" class="signature-pad" width="400" height="200"></canvas>
-								</div>
-								<div>
-									<button class="btn btn-light" id="clear">Clear</button>
-								</div>
+					<div class="row">
+						<div class="col-sm-5"></div>
+						<div class="col-sm-7">
+							<div class="sign-wrapper">
+								<p style="text-align: right;">Дата: <span id="date_string"></span>, подпись</p>
+								<canvas id="sign_sketch" width="340" height="136" style="touch-action: none;"></canvas>
+								<div onclick="clearSketch();" class="btn btn-sm btn-link" style="float: right;">Очистить</div>
+								<span class="form-comment">В этом окне просьба подписаться. Без вашей подписи обращение не будет рассматриваться.</span>
 							</div>
 						</div>
 					</div>
 				</div>
-			</section>
-			<script>
-				const options = {
-year: 'numeric',
-month: 'long',
-day: 'numeric'
-};
-let dateString = new Date().toLocaleString("ru", options);
-
-let dateElement = document.getElementById('date_string');
-dateElement.innerHTML = dateString;
-			</script>
-			<script>
-				var canvas = document.getElementById('signature-pad');
-
-function resizeCanvas() {
-var ratio = Math.max(window.devicePixelRatio || 1, 1);
-canvas.width = canvas.offsetWidth * ratio;
-canvas.height = canvas.offsetHeight * ratio;
-canvas.getContext("2d").scale(ratio, ratio);
-}
-
-window.onresize = resizeCanvas;
-resizeCanvas();
-
-var signaturePad = new SignaturePad(canvas, {backgroundColor: 'rgb(255, 255, 255)'});
-
-document.getElementById('clear').addEventListener('click', function () {
-signaturePad.clear();
-});
-			</script>
+			</div>
+			<div class="row justify-content-lg-center mt-5">
+				<div class="col-xl-8">
+					<div class="row py-3 px-2" style="background-color: #ebebeb;">
+						<div class="col-md-5 my-auto">
+							<button class="py-2 submit-button">Подписать обращение</button>
+						</div>
+						<div class="col-md-7 mt-2">
+							<p>Я даю согласие на обработку персональных данных и поручаю {{ petition_author_to_whom }}
+							распечатать и подать мое обращение в {{ petition_target }} на основании
+							<a href="{{ url('app_public_offer') }}">публичной оферты</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row justify-content-lg-center pt-4 pb-3 px-3 mt-4" style="background-color: #e8e8e8;">
+				<div class="col-xxl-6 col-lg-8">
+					<p>Политика обработки персональных данных и обеспечения безопасности при их обработке через сайт
+						{{ sitename }} доступна по ссылке <a href="{{ url('app_personal_data_policy') }}">{{ sitename }}{{ path('app_personal_data_policy') }}</a>
+					</p>
+				</div>
+			</div>
 		</div>
+		<script>
+		let dateString = new Date().toLocaleString("ru", {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		});
+
+		let dateElement = document.getElementById('date_string');
+		dateElement.innerHTML = dateString;
+
+		const canvas = document.getElementById("sign_sketch");
+
+		const signaturePad = new SignaturePad(canvas, {
+		maxWidth: 1.5,
+		minWidth: 0.2,
+		penColor: "#000080"
+		});
+
+		function clearSketch() {
+		signaturePad.clear();
+		}
+
+		function resizeCanvas() {
+			const ratio =  Math.max(window.devicePixelRatio || 1, 1);
+			canvas.width = canvas.offsetWidth * ratio;
+			canvas.height = canvas.offsetHeight * ratio;
+			canvas.getContext("2d").scale(ratio, ratio);
+			signaturePad.clear(); // otherwise isEmpty() might return incorrect value
+		}
+
+		window.addEventListener("resize", resizeCanvas);
+		resizeCanvas();
+		</script>
 	</body>
 </html>
