@@ -204,7 +204,7 @@
 						<div class="col-md-7 mt-2">
 							<p>Я даю согласие на обработку персональных данных и поручаю {{ petition_author_to_whom }}
 							распечатать и подать мое обращение в {{ petition_target }} на основании
-							<a href="{{ url('app_public_offer') }}">публичной оферты</a></p>
+							<a href="{{ url('app_public_offer', {petition_id: petition_id}) }}">публичной оферты</a></p>
 						</div>
 					</div>
 				</div>

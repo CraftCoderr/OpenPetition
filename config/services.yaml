@@ -10,6 +10,7 @@ parameters:
     app.siteowner_who: 'Иван Иванович Иванов'
     app.siteowner_by_whom: 'Иваном Ивановичем Ивановым'
     app.siteowner_birthdate: '01.01.1111 г.'
+    app.petition_id: 'kosmos'
     app.petition_author_who: 'Петр Петрович Петров'
     app.petition_author_to_whom: 'автору проекта "Галактический транспортный надзор" Петру Петровичу Петрову'
     app.petition_author_birthdate: '02.02.2222 г.'
