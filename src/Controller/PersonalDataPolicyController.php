@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PersonalDataPolicyController extends AbstractController
 {
-    #[Route('/personal-data-policy', name: 'app_personal_data_policy')]
+    #[Route('/personal-data-policy', name: 'app_personal_data_policy', priority: 10)]
     public function index(): Response
     {
         return $this->render('personal_data_policy.html.twig', [
