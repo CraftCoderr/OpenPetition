@@ -10,7 +10,10 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
-		<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+		<script src="{{ asset('js/signature_pad.min.js') }}"></script>
+		<script src="{{ asset('js/jquery.min.js') }}"></script>
+		<script src="{{ asset('js/jquery.validate.min.js') }}"></script>
+		<script src="{{ asset('js/additional-methods.min.js') }}"></script>
 
 		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Sans"/>
 
@@ -135,89 +138,96 @@
 			.submit-button:hover {
 				opacity: 1;
 			}
+			label.error {
+				color: #dc3535;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-6 py-5 px-5" style="background-color: #5aa9e6">
-					<h1>
-						<strong>{{ petition_title }}</strong>
-					</h1>
-					<h3 class="mt-3">
-						<strong>{{ petition_subtitle }}</strong>
-					</h3>
+			<form id="petitionForm">
+				<div class="row">
+					<div class="col-md-6 py-5 px-5" style="background-color: #5aa9e6">
+						<h1>
+							<strong>{{ petition_title }}</strong>
+						</h1>
+						<h3 class="mt-3">
+							<strong>{{ petition_subtitle }}</strong>
+						</h3>
+					</div>
+					<div class="col-md-6 p-0 splash-image" style="background-image: url({{ asset('title-image-1024x683.jpg') }});"></div>
 				</div>
-				<div class="col-md-6 p-0 splash-image" style="background-image: url({{ asset('title-image-1024x683.jpg') }});"></div>
-			</div>
-			<div class="row justify-content-lg-center mt-5">
-				<div class="col-lg-8 petition-page petition-form-element">
-					<div class="row">
-						<div class="col-md-6 signed">
-							<div class="signed-header">
-								<span>подписали</span>
+				<div class="row justify-content-lg-center mt-5">
+					<div class="col-lg-8 petition-page petition-form-element">
+						<div class="row">
+							<div class="col-md-6 signed">
+								<div class="signed-header">
+									<span>подписали</span>
+								</div>
+								<div class="signed-body">
+									<span>{{ people_signed }}</span>
+								</div>
+								<div class="signed-footer">
+									<span>человек</span>
+								</div>
 							</div>
-							<div class="signed-body">
-								<span>{{ people_signed }}</span>
-							</div>
-							<div class="signed-footer">
-								<span>человек</span>
-							</div>
-						</div>
-						<div class="col">
-							<div>
-								<span>{{ petition_target_to_whom|raw }}</span>
-							</div>
-							<div style="position: relative">
-								<div class="before-input">от</div>
-								<input name="fullname" type="" class="form-input mt-2" placeholder="Булгакова Михаила Афанасьевича">
-							</div>
-							<span class="form-comment">Впишите фамилию и имя</br>(отчество по желанию)</span>
-							<div>
-								<input name="email" type="" class="form-input mt-2" placeholder="e-mail">
-							</div>
-							<span class="form-comment">На этот адрес будет отправлен ответ</span>
-						</div>
-					</div>
-					<div class="row petition-text mt-4">
-						{{ petition_text|markdown_to_html }}
-					</div>
-					<div class="row">
-						<div class="col-sm-5"></div>
-						<div class="col-sm-7">
-							<div class="sign-wrapper">
-								<p style="text-align: right;">Дата: <span id="date_string"></span>, подпись</p>
-								<canvas id="sign_sketch" width="340" height="136" style="touch-action: none;"></canvas>
-								<div onclick="clearSketch();" class="btn btn-sm btn-link" style="float: right;">Очистить</div>
-								<span class="form-comment">В этом окне просьба подписаться. Без вашей подписи обращение не будет рассматриваться.</span>
+							<div class="col">
+								<div>
+									<span>{{ petition_target_to_whom|raw }}</span>
+								</div>
+								<div style="position: relative">
+									<div class="before-input">от</div>
+									<input name="fullname" type="" class="form-input mt-2" placeholder="Булгакова Михаила Афанасьевича" required data-rule-fullname="true">
+								</div>
+								<span class="form-comment">Впишите фамилию и имя</br>(отчество по желанию)</span>
+								<div class="mt-2">
+									<input name="email" type="" class="form-input mt-2" placeholder="e-mail" required data-rule-email="true">
+								</div>
+								<span class="form-comment">На этот адрес будет отправлен ответ</span>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row justify-content-lg-center mt-5">
-				<div class="col-xl-8">
-					<div class="row py-3 px-2" style="background-color: #ebebeb;">
-						<div class="col-md-5 my-auto">
-							<button class="py-2 submit-button">Подписать обращение</button>
+						<div class="row petition-text mt-4">
+							{{ petition_text|markdown_to_html }}
 						</div>
-						<div class="col-md-7 mt-2">
-							<p>Я даю согласие на обработку персональных данных и поручаю {{ petition_author_to_whom }}
-							распечатать и подать мое обращение в {{ petition_target }} на основании
-							<a href="{{ url('app_public_offer', {petition_id: petition_id}) }}">публичной оферты</a></p>
+						<div class="row">
+							<div class="col-sm-5"></div>
+							<div class="col-sm-7">
+								<div class="sign-wrapper">
+									<p style="text-align: right;">Дата: <span id="date_string"></span>, подпись</p>
+									<input data-rule-signature="true" id="signature" name="signature" type="hidden">
+									<canvas id="sign_sketch" width="340" height="136" style="touch-action: none;"></canvas>
+									<div onclick="clearSketch();" class="btn btn-sm btn-link" style="float: right;">Очистить</div>
+									<span class="form-comment">В этом окне просьба подписаться. Без вашей подписи обращение не будет рассматриваться.</span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row justify-content-lg-center pt-4 pb-3 px-3 mt-4" style="background-color: #e8e8e8;">
-				<div class="col-xxl-6 col-lg-8">
-					<p>Политика обработки персональных данных и обеспечения безопасности при их обработке через сайт
-						{{ sitename }} доступна по ссылке <a href="{{ url('app_personal_data_policy') }}">{{ sitename }}{{ path('app_personal_data_policy') }}</a>
-					</p>
+				<div class="row justify-content-lg-center mt-5">
+					<div class="col-xl-8">
+						<div class="row py-3 px-2" style="background-color: #ebebeb;">
+							<div class="col-md-5 my-auto">
+								<input class="py-2 submit-button" type="submit" value="Подписать обращение"></input>
+							</div>
+							<div class="col-md-7 mt-2">
+								<p>Я даю согласие на обработку персональных данных и поручаю {{ petition_author_to_whom }}
+								распечатать и подать мое обращение в {{ petition_target }} на основании
+								<a href="{{ url('app_public_offer', {petition_id: petition_id}) }}">публичной оферты</a></p>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
+				<div class="row justify-content-lg-center pt-4 pb-3 px-3 mt-4" style="background-color: #e8e8e8;">
+					<div class="col-xxl-6 col-lg-8">
+						<p>Политика обработки персональных данных и обеспечения безопасности при их обработке через сайт
+							{{ sitename }} доступна по ссылке <a href="{{ url('app_personal_data_policy') }}">{{ sitename }}{{ path('app_personal_data_policy') }}</a>
+						</p>
+					</div>
+				</div>
+			</form>
 		</div>
 		<script>
+		// Date handler
 		let dateString = new Date().toLocaleString("ru", {
 			year: 'numeric',
 			month: 'long',
@@ -227,6 +237,7 @@
 		let dateElement = document.getElementById('date_string');
 		dateElement.innerHTML = dateString;
 
+		// Signature pad
 		const canvas = document.getElementById("sign_sketch");
 
 		const signaturePad = new SignaturePad(canvas, {
@@ -239,6 +250,36 @@
 		signaturePad.clear();
 		}
 
+		// Validation
+		function submitForm() {
+			document.getElementById("petitionForm").submit();
+		}
+
+		jQuery.validator.addMethod("signature", function(value, element, options) {
+			return !signaturePad.isEmpty();
+		}, "Пожалуйста, поставьте подпись");
+
+		jQuery.validator.addMethod("fullname", function(value, element, options) {
+			parts = element.value.trim().split(" ");
+			return parts.length == 2 || parts.length == 3;
+		}, "Пожалуйста, введите имя и фамилию раздельно (отчество по желанию)");
+
+		jQuery.extend(jQuery.validator.messages, {
+			'required': "Пожалуйста, заполните это поле",
+			'email': "Пожалуйста, введите корректный email"
+		});
+
+		$("#petitionForm").validate({
+			ignore: [],
+			submitHandler: function(form) {
+				console.log("Form valid!");
+			},
+			invalidHandler: function(event, validator) {
+				console.log("Form invalid");
+			}
+		});
+
+		// Canvas resize handler
 		function resizeCanvas() {
 			const ratio =  Math.max(window.devicePixelRatio || 1, 1);
 			canvas.width = canvas.offsetWidth * ratio;
