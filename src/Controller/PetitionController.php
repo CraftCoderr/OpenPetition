@@ -2,11 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Signature;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PetitionController extends AbstractController
 {
@@ -61,5 +66,34 @@ class PetitionController extends AbstractController
             'petition_author_to_whom' => $this->getParameter('app.petition_author_to_whom'),
             'petition_url' => $this->getParameter('app.petition_url'),
         ]);
+    }
+
+    #[Route('/{petition_id}/signature', methods: ['POST'], name: 'app_petition_signature', priority: 1)]
+    public function signature(string $petition_id, Request $request, ValidatorInterface $validator, ManagerRegistry $doctrine): JsonResponse
+    {
+        $entityManager = $doctrine->getManager();
+
+        $signature = new Signature;
+
+        $signature->setName($request->request->get('name'));
+        $signature->setSurname($request->request->get('surname'));
+        $signature->setPatronymic($request->request->get('patronymic'));
+        $signature->setEmail($request->request->get('email'));
+        $signature->setSignatureWriting($request->request->get('signature_writing'));
+        $signature->setSigningDate(new \DateTime('now'));
+
+        $errors = $validator->validate($signature);
+
+        if (count($errors) > 0) {
+            return new JsonResponse([
+                'message' => (string) $errors
+            ], 400);
+        }
+
+        $entityManager->persist($signature);
+
+        $entityManager->flush();
+
+        return new JsonResponse(['message' => 'Signature created successfully'], 201);
     }
 }
