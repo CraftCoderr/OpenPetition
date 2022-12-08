@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class PetitionController extends AbstractController
 {
     #[Route('/{petition_id}', name: 'app_petition_page')]
-    public function index(string $petition_id, KernelInterface $kernel): Response
+    public function index(string $petition_id, KernelInterface $kernel, ManagerRegistry $doctrine): Response
     {
         if ($petition_id != $this->getParameter('app.petition_id')) {
             $this->redirectToRoute('app_petition_page', ['petition_id' => $this->getParameter('app.petition_id')]);
@@ -35,12 +35,14 @@ class PetitionController extends AbstractController
             $petition_text = $petition_text_file->getContents();
         }
 
+        $signaturesCount = $doctrine->getRepository(Signature::class)->count([]);
+
         return $this->render('petition.html.twig', [
             'petition_id' => $petition_id,
             'sitename' => $this->getParameter('app.sitename'),
             'siteurl' => $this->getParameter('app.siteurl'),
             'sitemail' => $this->getParameter('app.sitemail'),
-            'people_signed' => "357",
+            'people_signed' => $signaturesCount,
             'petition_title' => $this->getParameter('app.petition_title'),
             'petition_subtitle' => $this->getParameter('app.petition_subtitle'),
             'petition_target_to_whom' => $this->getParameter('app.petition_target_to_whom'),
