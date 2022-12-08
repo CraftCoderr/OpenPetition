@@ -15,6 +15,9 @@
 		<script src="{{ asset('js/jquery.validate.min.js') }}"></script>
 		<script src="{{ asset('js/additional-methods.min.js') }}"></script>
 
+		<link rel="stylesheet" href="{{ asset('dist/likely/likely.css') }}">
+		<script src="{{ asset('dist/likely/likely.js') }}"></script>
+
 		<meta property="og:title" content="{{ petition_title }}" />
 		<meta property="og:description" content="{{ petition_subtitle }}" />
 		<meta property="og:type" content="article" />
@@ -226,6 +229,16 @@
 						</div>
 					</div>
 				</div>
+				<div class="row justify-content-center mt-4">
+					<div class="col mx-auto text-center">
+						<div><strong class="fs-5">Расскажите друзьям</strong></div>
+						<div class="likely likely-big">
+							<div class="vkontakte">Поделиться</div>
+							<div class="telegram">Отправить</div>
+							<div class="odnoklassniki">Класснуть</div>
+						</div>
+					</div>
+				</div>
 				<div class="row justify-content-lg-center pt-4 pb-3 px-3 mt-4" style="background-color: #e8e8e8;">
 					<div class="col-xxl-6 col-lg-8">
 						<p>Политика обработки персональных данных и обеспечения безопасности при их обработке через сайт
@@ -242,8 +255,14 @@
 						<h5 class="modal-title" id="successModalTitle">Спасибо!</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
 					</div>
-					<div class="modal-body py-5" style="text-align: center;">
-						Ваша подпись принята
+					<div class="modal-body py-5 text-center">
+						<p><strong>Ваша подпись принята</strong></p>
+						<p class="mt-4">Расскажите друзьям</p>
+						<div class="likely">
+							<div class="vkontakte">Поделиться</div>
+							<div class="telegram">Отправить</div>
+							<div class="odnoklassniki">Класснуть</div>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
