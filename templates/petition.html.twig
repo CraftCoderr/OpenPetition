@@ -167,6 +167,7 @@
 					<div class="col-lg-8 petition-page petition-form-element">
 						<div class="row">
 							<div class="col-md-6 signed">
+								{% if people_signed >= 10 %}
 								<div class="signed-header">
 									<span>подписали</span>
 								</div>
@@ -176,6 +177,7 @@
 								<div class="signed-footer">
 									<span>человек</span>
 								</div>
+								{% endif %}
 							</div>
 							<div class="col">
 								<div>
@@ -217,7 +219,7 @@
 							<div class="col-md-7 mt-2">
 								<p>Я даю согласие на обработку персональных данных и поручаю {{ petition_author_to_whom }}
 								распечатать и подать мое обращение в {{ petition_target }} на основании
-								<a href="{{ url('app_public_offer', {petition_id: petition_id}) }}">публичной оферты</a></p>
+								<a target="_blank" rel="noopener noreferrer" href="{{ url('app_public_offer', {petition_id: petition_id}) }}">публичной оферты</a></p>
 							</div>
 						</div>
 					</div>
@@ -235,7 +237,7 @@
 				<div class="row justify-content-lg-center pt-4 pb-3 px-3 mt-4" style="background-color: #e8e8e8;">
 					<div class="col-xxl-6 col-lg-8">
 						<p>Политика обработки персональных данных и обеспечения безопасности при их обработке через сайт
-							{{ sitename }} доступна по ссылке <a href="{{ url('app_personal_data_policy') }}">{{ sitename }}{{ path('app_personal_data_policy') }}</a>
+							{{ sitename }} доступна по ссылке <a target="_blank" rel="noopener noreferrer" href="{{ url('app_personal_data_policy') }}">{{ sitename }}{{ path('app_personal_data_policy') }}</a>
 						</p>
 					</div>
 				</div>
