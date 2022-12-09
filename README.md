@@ -8,8 +8,8 @@ Docker setup based on [Symfony Docker](https://github.com/dunglas/symfony-docker
 
 #### Building docker images
 
-`docker compose build --pull --no-cache`
+`./docker_dev.sh build --pull --no-cache`
 
 #### Running dev environment with XDEBUG enabled
 
-`XDEBUG_MODE=debug docker compose up -d`
+`XDEBUG_MODE=debug ./docker_dev.sh up -d`

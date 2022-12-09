@@ -53,7 +53,7 @@ class PetitionController extends AbstractController
     }
 
     #[Route('/{petition_id}/public-offer', name: 'app_public_offer', priority: 1)]
-    public function publicOffer(): Response
+    public function publicOffer(string $petition_id): Response
     {
         return $this->render('public_offer.html.twig', [
             'sitename' => $this->getParameter('app.sitename'),
@@ -66,7 +66,7 @@ class PetitionController extends AbstractController
             'petition_author_birthdate' => $this->getParameter('app.petition_author_birthdate'),
             'petition_target' => $this->getPArameter('app.petition_target'),
             'petition_author_to_whom' => $this->getParameter('app.petition_author_to_whom'),
-            'petition_url' => $this->getParameter('app.petition_url'),
+            'petition_url' => $this->getParameter('app.siteurl') . $this->generateUrl('app_petition_page', ['petition_id' => $petition_id]),
         ]);
     }
 
