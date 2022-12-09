@@ -3,5 +3,9 @@ version: "3.4"
 # Production environment override
 services:
   php:
+    restart: always
     environment:
       APP_SECRET: ${APP_SECRET}
+
+  database:
+    restart: always

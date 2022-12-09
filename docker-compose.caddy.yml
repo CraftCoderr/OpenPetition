@@ -2,6 +2,8 @@ version: "3.4"
 
 services:
   php:
+    volumes:
+      - php_socket:/var/run/php
     environment:
       MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET}
 
@@ -35,5 +37,6 @@ services:
         protocol: udp
 
 volumes:
+  php_socket:
   caddy_data:
   caddy_config:

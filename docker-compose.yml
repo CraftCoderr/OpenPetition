@@ -9,8 +9,6 @@ services:
         SYMFONY_VERSION: ${SYMFONY_VERSION:-}
         STABILITY: ${STABILITY:-stable}
     restart: unless-stopped
-    volumes:
-      - php_socket:/var/run/php
     healthcheck:
       interval: 10s
       timeout: 3s
@@ -36,6 +34,3 @@ services:
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_USER: ${DATABASE_USER_NAME}
       MYSQL_PASSWORD: ${DATABASE_USER_PASSWORD}
-
-volumes:
-  php_socket:
