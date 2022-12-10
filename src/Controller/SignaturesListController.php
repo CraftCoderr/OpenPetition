@@ -17,10 +17,10 @@ class SignaturesListController extends AbstractController
     ): Response {
         $signatures = $signatureRepository->findAll();
 
-        $dompdf = $pdfGenerationService->generate($signatures);
+        $generatedPdf = $pdfGenerationService->generate($signatures);
 
         return new Response(
-            $dompdf->stream('resume', ["Attachment" => false]),
+            $generatedPdf,
             Response::HTTP_OK,
             ['Content-Type' => 'application/pdf']
         );
