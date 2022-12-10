@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Entity\Signature;
 use Dompdf\Dompdf;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -16,7 +17,8 @@ class PdfGenerationService
     private const DATE_FORMAT = 'd.m.Y';
 
     public function __construct(
-        private readonly Environment $twig
+        private readonly Environment $twig,
+        private readonly KernelInterface $kernel
     ) {
     }
 
@@ -33,9 +35,17 @@ class PdfGenerationService
     {
         $formattedSignatures = $this->formatData($signatures);
 
-        $html = $this->twig->render('signatures_list.html.twig', ['signatures' => $formattedSignatures]);
+        $html = $this->twig->render('signatures_list.html.twig', ['signatures' => $formattedSignatures] );
 
-        $dompdf = new Dompdf();
+        $tmp = sys_get_temp_dir();
+
+        $dompdf = new Dompdf([
+            'isRemoteEnabled' => true,
+            'fontDir' => $tmp,
+            'fontCache' => $tmp,
+            'tempDir' => $tmp,
+            'chroot' => $tmp,
+        ]);
         $dompdf->loadHtml($html);
         $dompdf->render();
 
@@ -53,7 +63,9 @@ class PdfGenerationService
         foreach ($signatures as $i => $signature) {
             $data[] = [
                 'number' => $i + 1,
-                'name' => "{$signature->getName()} {$signature->getSurname()} {$signature->getPatronymic()}",
+                'name' => $signature->getName(),
+                'surname' => $signature->getSurname(),
+                'patronymic' => $signature->getPatronymic(),
                 'signing_date' => $signature->getSigningDate()?->format(self::DATE_FORMAT),
                 'signature_writing' => $signature->getSignatureWriting(),
             ];
