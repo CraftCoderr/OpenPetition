@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список подписей</title>
+    <style>
+        . {
+            font-family: DejaVu Sans, serif;
+            font-size: 12px;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>№</th>
+        <th>ФИО</th>
+        <th>Дата подписания</th>
+        <th>Подпись</th>
+    </tr>
+    {% for signature in signatures %}
+        <tr>
+            <td>{{ signature.number }}</td>
+            <td>{{ signature.name }}</td>
+            <td>{{ signature.signing_date }}</td>
+            <td><img src="{{ signature.signature_writing }}" style="width:200px;" alt="sign"></td>
+        </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
