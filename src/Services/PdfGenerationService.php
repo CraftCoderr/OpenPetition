@@ -23,12 +23,13 @@ class PdfGenerationService
     /**
      * @param Signature[] $signatures
      *
-     * @return Dompdf
+     * @return string
+     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function generate(array $signatures): Dompdf
+    public function generate(array $signatures): string
     {
         $formattedSignatures = $this->formatData($signatures);
 
@@ -38,7 +39,7 @@ class PdfGenerationService
         $dompdf->loadHtml($html);
         $dompdf->render();
 
-        return $dompdf;
+        return $dompdf->output() ?? '';
     }
 
     /**
