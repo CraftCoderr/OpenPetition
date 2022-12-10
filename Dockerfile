@@ -34,6 +34,7 @@ RUN apk add --no-cache \
 		file \
 		gettext \
 		git \
+		libpng \
 	;
 
 RUN set -eux; \
@@ -49,6 +50,10 @@ RUN set -eux; \
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 ###< doctrine/doctrine-bundle ###
 ###< recipes ###
+
+RUN apk add --no-cache libpng-dev libjpeg-turbo-dev zlib-dev \
+	&& docker-php-ext-install gd \
+	&& apk del libpng-dev libjpeg-turbo-dev zlib-dev
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --link docker/php/conf.d/app.ini $PHP_INI_DIR/conf.d/

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Tinos&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            font-family: Tinos;
+            font-size: 14px;
+        }
+
+        h1 {
+            font-size: 14px;
+            text-align: center;
+            font-weight: normal;
+        }
+
+        table {
+            margin-top: 24px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid black;
+            text-align: left;
+            padding: 4px;
+            font-weight: normal;
+        }
+
+        th {
+            padding-bottom: 16px;
+        }
+
+        .signature_writing_cell {
+            height: 45px;
+            position: relative;
+        }
+
+        div.signature_writing {
+            position: absolute;
+            top: -15px;
+            background-size: cover;
+            height: 92px;
+            width: 200px;
+        }
+
+        th.number {
+            width: 24px;
+        }
+
+        th.date {
+            width: 64px;
+        }
+
+        th.signature_writing {
+            width: 208px;
+        }
+
+        .page-number:after {
+            content: counter(page);
+        }
+
+        @page {
+            margin-top: 256px;
+        }
+        header {
+            position: fixed;
+            top: -216px;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="page-number">Подписной лист №</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam nisi voluptates commodi
+        fugiat, recusandae voluptatem. Assumenda, necessitatibus! Ipsum unde debitis minus. Quos id
+        eos maxime fugiat quisquam reiciendis vero iusto.</p>
+    </header>
+    <table>
+        <thead>
+            <tr>
+                <th class="number">№</th>
+                <th>Фамилия Имя Отчество</th>
+                <th class="date">Дата</th>
+                <th class="signature_writing">Подпись</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for signature in signatures %}
+            <tr>
+                <td>{{ signature.number }}</td>
+                <td>{{ signature.name }} {{ signature.surname }} {{ signature.patronymic }}</td>
+                <td>{{ signature.signing_date }}</td>
+                <td class="signature_writing_cell"><div class="signature_writing" style="background-image: url({{ signature.signature_writing }});"></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

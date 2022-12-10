@@ -12,6 +12,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
+        "dompdf/dompdf": "^2.0",
         "gowork/symfony-json-request": "^0.2.1",
         "league/commonmark": "^2.3",
         "symfony/asset": "6.1.*",
