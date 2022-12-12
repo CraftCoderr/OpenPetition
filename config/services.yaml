@@ -6,7 +6,7 @@
 parameters:
     app.sitename: '%env(APP_SITENAME)%'
     app.siteurl: '%env(APP_SITEURL)%'
-    app.sitemail: '%env(APP_SITEMAIL)%admin@example.com'
+    app.sitemail: '%env(APP_SITEMAIL)%'
     app.siteowner_who: '%env(APP_SITEOWNER_WHO)%'
     app.siteowner_by_whom: '%env(APP_SITEOWNER_BY_WHOM)%'
     app.siteowner_birthdate: '%env(APP_SITEOWNER_BIRTHDATE)%'

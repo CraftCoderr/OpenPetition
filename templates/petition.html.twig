@@ -204,7 +204,7 @@
 									<input data-rule-signature="true" id="signature" name="signature" type="hidden">
 									<canvas id="sign_sketch" width="340" height="136" style="touch-action: none;"></canvas>
 									<div onclick="clearSketch();" class="btn btn-sm btn-link" style="float: right;">Очистить</div>
-									<span class="form-comment">В этом окне просьба подписаться. Без вашей подписи обращение не будет рассматриваться.</span>
+									<span class="form-comment">В этом окне просьба поставить подпись. Без вашей подписи обращение не будет рассматриваться.</span>
 								</div>
 							</div>
 						</div>
@@ -218,7 +218,7 @@
 							</div>
 							<div class="col-md-7 mt-2">
 								<p>Я даю согласие на обработку персональных данных и поручаю {{ petition_author_to_whom }}
-								распечатать и подать мое обращение в {{ petition_target }} на основании
+								подать мое обращение в {{ petition_target }} на основании
 								<a target="_blank" rel="noopener noreferrer" href="{{ url('app_public_offer', {petition_id: petition_id}) }}">публичной оферты</a></p>
 							</div>
 						</div>
