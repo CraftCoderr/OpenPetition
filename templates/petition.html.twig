@@ -283,6 +283,18 @@
 			</div>
 		</div>
 		<script>
+		// Global
+		function normalizeString(s) {
+			return s.trim().replaceAll(/\s+/g, " ");
+		}
+
+		function parseFullName(s) {
+			let fullnameParts = s.split(" ");
+			if (fullnameParts.length < 2)
+				return [];
+			return [fullnameParts[0], fullnameParts[1], fullnameParts.slice(2).join(" ")];
+		}
+
 		// Date handler
 		let dateString = new Date().toLocaleString("ru", {
 			year: 'numeric',
@@ -339,15 +351,15 @@
 
 			requestData = {}
 
-			let fullnameParts = form["fullname"].value.trim().split(" ");
+			let fullnameParsed = parseFullName(normalizeString(form["fullname"].value));
 
-			if (fullnameParts.length == 2) {
-				requestData.name = fullnameParts[0];
-				requestData.surname = fullnameParts[1];
-			} else if (fullnameParts.length == 3) {
-				requestData.name = fullnameParts[0];
-				requestData.surname = fullnameParts[1];
-				requestData.patronymic = fullnameParts[2];
+			if (fullnameParsed.length == 2) {
+				requestData.name = fullnameParsed[0];
+				requestData.surname = fullnameParsed[1];
+			} else if (fullnameParsed.length == 3) {
+				requestData.name = fullnameParsed[0];
+				requestData.surname = fullnameParsed[1];
+				requestData.patronymic = fullnameParsed[2];
 			}
 
 			requestData.email = form["email"].value;
@@ -360,14 +372,13 @@
 		};
 
 		// Validation
-
 		jQuery.validator.addMethod("signature", function(value, element, options) {
 			return !signaturePad.isEmpty();
 		}, "Пожалуйста, поставьте подпись");
 
 		jQuery.validator.addMethod("fullname", function(value, element, options) {
-			let parts = element.value.trim().split(" ");
-			return parts.length == 2 || parts.length == 3;
+			let parts = parseFullName(normalizeString(element.value));
+			return parts.length >= 2;
 		}, "Пожалуйста, введите имя и фамилию раздельно (отчество по желанию)");
 
 		jQuery.extend(jQuery.validator.messages, {
