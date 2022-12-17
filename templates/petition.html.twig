@@ -383,8 +383,14 @@
 			}
 		});
 
+		var currentWidth = 0;
+
 		// Canvas resize handler
 		function resizeCanvas() {
+			if (currentWidth == window.innerWidth) {
+				return;
+			}
+			currentWidth = window.innerWidth;
 			const ratio =  Math.max(window.devicePixelRatio || 1, 1);
 			canvas.width = canvas.offsetWidth * ratio;
 			canvas.height = canvas.offsetHeight * ratio;
