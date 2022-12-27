@@ -18,17 +18,17 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PetitionController extends AbstractController
 {
-    #[Route('/{petition_id}', name: 'app_petition_page')]
+    #[Route('/{public_id}', name: 'app_petition_page')]
     public function index(
-        string $petition_id,
+        string $public_id,
         PetitionRepository $petitionRepository
     ): Response {
-        $petition = $petitionRepository->get((int) $petition_id);
+        $petition = $petitionRepository->getPetitionByPublicId($public_id);
 
         $signaturesCount = $petitionRepository->getSignatureCount($petition);
 
         return $this->render('petition.html.twig', [
-            'petition_id' => $petition_id,
+            'petition_id' => $petition->getId(),
             'sitename' => $this->getParameter('app.sitename'),
             'siteurl' => $this->getParameter('app.siteurl'),
             'sitemail' => $this->getParameter('app.sitemail'),

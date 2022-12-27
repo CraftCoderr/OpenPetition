@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PetitionRepository;
+use Attribute;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,6 +39,9 @@ class Petition
 
     #[ORM\OneToMany(mappedBy: "petition", targetEntity: Signature::class)]
     private Collection $signatures;
+
+    #[ORM\Column(type: Types::TEXT, unique: true)]
+    private string $public_id;
 
     public function getSignatures(): Collection
     {
@@ -163,5 +167,17 @@ class Petition
     public function setText(string $text): void
     {
         $this->text = $text;
+    }
+
+    public function getPublicId(): string
+    {
+        return $this->public_id;
+    }
+
+    public function setPublicId(string $public_id): self
+    {
+        $this->public_id = $public_id;
+
+        return $this;
     }
 }

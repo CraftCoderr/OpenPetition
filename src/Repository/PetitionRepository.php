@@ -28,6 +28,20 @@ class PetitionRepository extends ServiceEntityRepository
     /**
      * @throws EntityNotFoundException
      */
+    public function getPetitionByPublicId(string $publicId): Petition
+    {
+        $entity = $this->findOneBy(['public_id' => $publicId]);
+
+        if (!$entity instanceof Petition) {
+            throw new EntityNotFoundException("Petition was not fount. public_id is [$publicId]");
+        }
+
+        return $entity;
+    }
+
+    /**
+     * @throws EntityNotFoundException
+     */
     public function get(int $id): Petition
     {
         $entity = $this->find($id);

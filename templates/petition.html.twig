@@ -363,7 +363,7 @@
 			}
 
 			let url = document.URL
-			requestData.petition_id = url.substring(url.lastIndexOf('/') + 1)
+			requestData.petition_path_id = url.substring(url.lastIndexOf('/') + 1)
 
 			requestData.email = form["email"].value;
 			requestData.signature_writing = signaturePad.toDataURL();
