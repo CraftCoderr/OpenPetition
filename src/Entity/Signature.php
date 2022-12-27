@@ -38,6 +38,20 @@ class Signature
     #[Assert\NotBlank]
     private ?\DateTimeInterface $signing_date = null;
 
+    #[ORM\ManyToOne(targetEntity: Petition::class, inversedBy: "signatures")]
+    #[ORM\JoinColumn(nullable: false)]
+    private Petition $petition;
+
+    public function getPetition(): Petition
+    {
+        return $this->petition;
+    }
+
+    public function setPetition(Petition $petition): void
+    {
+        $this->petition = $petition;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

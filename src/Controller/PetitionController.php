@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Petition;
 use App\Entity\Signature;
+use App\Repository\PetitionRepository;
+use App\Repository\SignatureRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
@@ -16,26 +19,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class PetitionController extends AbstractController
 {
     #[Route('/{petition_id}', name: 'app_petition_page')]
-    public function index(string $petition_id, KernelInterface $kernel, ManagerRegistry $doctrine): Response
-    {
-        if ($petition_id != $this->getParameter('app.petition_id')) {
-            $this->redirectToRoute('app_petition_page', ['petition_id' => $this->getParameter('app.petition_id')]);
-        }
+    public function index(
+        string $petition_id,
+        PetitionRepository $petitionRepository
+    ): Response {
+        $petition = $petitionRepository->get((int) $petition_id);
 
-        $finder = new Finder();
-        $finder->files()->ignoreUnreadableDirs()->path($this->getParameter('app.petition_text_file'))->in($kernel->getProjectDir() . '/app_parameters');
-
-        $petition_text_file = null;
-
-        foreach ($finder as $petition_text_file) {}
-
-        if (is_null($petition_text_file)) {
-            $petition_text = 'Текст отсутствует';
-        } else {
-            $petition_text = $petition_text_file->getContents();
-        }
-
-        $signaturesCount = $doctrine->getRepository(Signature::class)->count([]);
+        $signaturesCount = $petitionRepository->getSignatureCount($petition);
 
         return $this->render('petition.html.twig', [
             'petition_id' => $petition_id,
@@ -43,12 +33,12 @@ class PetitionController extends AbstractController
             'siteurl' => $this->getParameter('app.siteurl'),
             'sitemail' => $this->getParameter('app.sitemail'),
             'people_signed' => $signaturesCount,
-            'petition_title' => $this->getParameter('app.petition_title'),
-            'petition_subtitle' => $this->getParameter('app.petition_subtitle'),
-            'petition_target_to_whom' => $this->getParameter('app.petition_target_to_whom'),
-            'petition_target' => $this->getParameter('app.petition_target'),
-            'petition_author_to_whom' => $this->getParameter('app.petition_author_to_whom'),
-            'petition_text' => $petition_text
+            'petition_title' => $petition->getTitle(),
+            'petition_subtitle' => $petition->getSubtitle(),
+            'petition_target_to_whom' => $petition->getTargetToWhom(),
+            'petition_target' => $petition->getTarget(),
+            'petition_author_to_whom' => $petition->getAuthorToWhom(),
+            'petition_text' => $petition->getText(),
         ]);
     }
 
@@ -64,25 +54,33 @@ class PetitionController extends AbstractController
             'siteowner_birthdate' => $this->getParameter('app.siteowner_birthdate'),
             'petition_autor_who' => $this->getParameter('app.petition_author_who'),
             'petition_author_birthdate' => $this->getParameter('app.petition_author_birthdate'),
-            'petition_target' => $this->getPArameter('app.petition_target'),
+            'petition_target' => $this->getParameter('app.petition_target'),
             'petition_author_to_whom' => $this->getParameter('app.petition_author_to_whom'),
             'petition_url' => $this->getParameter('app.siteurl') . $this->generateUrl('app_petition_page', ['petition_id' => $petition_id]),
         ]);
     }
 
-    #[Route('/{petition_id}/signature', methods: ['POST'], name: 'app_petition_signature', priority: 1)]
-    public function signature(string $petition_id, Request $request, ValidatorInterface $validator, ManagerRegistry $doctrine): JsonResponse
-    {
+    #[Route('/{petition_id}/signature', name: 'app_petition_signature', methods: ['POST'], priority: 1)]
+    public function signature(
+        Request $request,
+        ValidatorInterface $validator,
+        ManagerRegistry $doctrine,
+        PetitionRepository $petitionRepository
+    ): JsonResponse {
         $entityManager = $doctrine->getManager();
 
         $signature = new Signature;
 
-        $signature->setName($request->request->get('name'));
-        $signature->setSurname($request->request->get('surname'));
-        $signature->setPatronymic($request->request->get('patronymic'));
-        $signature->setEmail($request->request->get('email'));
-        $signature->setSignatureWriting($request->request->get('signature_writing'));
+        $signature->setName($request->get('name'));
+        $signature->setSurname($request->get('surname'));
+        $signature->setPatronymic($request->get('patronymic'));
+        $signature->setEmail($request->get('email'));
+        $signature->setSignatureWriting($request->get('signature_writing'));
         $signature->setSigningDate(new \DateTime('now'));
+
+        $petitionId = $request->get('petition_id');
+        $petition = $petitionRepository->get($petitionId);
+        $signature->setPetition($petition);
 
         $errors = $validator->validate($signature);
 
@@ -93,7 +91,6 @@ class PetitionController extends AbstractController
         }
 
         $entityManager->persist($signature);
-
         $entityManager->flush();
 
         return new JsonResponse(['message' => 'Signature created successfully'], 201);
