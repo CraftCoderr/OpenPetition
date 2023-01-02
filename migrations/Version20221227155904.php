@@ -19,7 +19,7 @@ final class Version20221227155904 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('CREATE TABLE petition (
+        $this->addSql('CREATE TABLE IF NOT EXISTS petition (
                 id INT AUTO_INCREMENT NOT NULL,
                 title VARCHAR(255) NOT NULL,
                 text LONGTEXT NOT NULL,
@@ -35,7 +35,7 @@ final class Version20221227155904 extends AbstractMigration
             DEFAULT CHARACTER SET utf8mb4 
             COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
 
-        $this->addSql('CREATE TABLE signature (
+        $this->addSql('CREATE TABLE IF NOT EXISTS signature (
             id INT AUTO_INCREMENT NOT NULL,
             petition_id INT NOT NULL,
             name VARCHAR(255) NOT NULL,
