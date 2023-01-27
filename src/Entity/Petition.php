@@ -20,27 +20,30 @@ class Petition
     private string $title;
 
     #[ORM\Column(type: Types::TEXT)]
-    private string $text;
+    private string $subtitle;
 
     #[ORM\Column(type: Types::TEXT)]
-    private string $subtitle;
+    private string $text;
 
     #[ORM\Column(type: Types::TEXT)]
     private string $target;
 
     #[ORM\Column(type: Types::TEXT)]
-    private string $author;
+    private string $target_to_whom;
 
     #[ORM\Column(type: Types::TEXT)]
-    private string $target_to_whom;
+    private string $author;
 
     #[ORM\Column(type: Types::TEXT)]
     private string $author_to_whom;
 
+    #[ORM\Column(length: 255)]
+    private string $author_birthdate;
+
     #[ORM\OneToMany(mappedBy: "petition", targetEntity: Signature::class)]
     private Collection $signatures;
 
-    #[ORM\Column(type: Types::TEXT, unique: true)]
+    #[ORM\Column(length: 255, unique: true)]
     private string $public_id;
 
     public function getSignatures(): Collection
@@ -169,6 +172,23 @@ class Petition
         $this->text = $text;
     }
 
+    /**
+     * Get the value of author_birthdate
+     */
+    public function getAuthorBirthdate(): string
+    {
+        return $this->author_birthdate;
+    }
+
+    /**
+     * Set the value of author_birthdate
+     * @param string $author_birthdate
+     */
+    public function setAuthorBirthdate($author_birthdate): void
+    {
+        $this->author_birthdate = $author_birthdate;
+    }
+
     public function getPublicId(): string
     {
         return $this->public_id;
@@ -180,4 +200,5 @@ class Petition
 
         return $this;
     }
+
 }

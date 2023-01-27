@@ -39,8 +39,7 @@ class Signature
     private ?\DateTimeInterface $signing_date = null;
 
     #[ORM\ManyToOne(targetEntity: Petition::class, inversedBy: "signatures")]
-    #[ORM\JoinColumn(nullable: false)]
-    private Petition $petition;
+    private ?Petition $petition;
 
     public function getPetition(): Petition
     {

@@ -1,9 +1,13 @@
-Уважаемый Родион Галактионович!
+INSERT INTO petition(title, subtitle, text, target, target_to_whom, author, author_to_whom, author_birthdate, public_id) VALUES
+(
+    'Сбор подписей за развитие общественного транспорта в Космосе!',
+    'Каждое подписанное обращение будет распечатано и передано в Правительство галактики Млечный Путь.',
+    'Уважаемый Родион Галактионович!
 ===
 
 Просим принять меры по обеспечению безопасности космического движения.
 
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident officiis facere, 
+Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident officiis facere,
 odit commodi hic repellendus laboriosam porro saepe dolor culpa aperiam nobis sed?
 Blanditiis quae aliquid eum corrupti? Praesentium, quae?
 
@@ -24,4 +28,10 @@ quod voluptas est enim! Sequi necessitatibus optio aperiam?
 dolor sit amet consectetur adipisicing elit. Officia officiis inventore tempore distinctio,
 laudantium facere pariatur odio autem, sed illum id in, aperiam maiores maxime
 repellendus aspernatur debitis accusantium earum magni quod recusandae vitae
-voluptatum quas quasi!
+voluptatum quas quasi!',
+    'Правительство галактики Млечный Путь',
+    'Педседателю Правительства галактики Млечный Путь Марсовому&nbsp;Р.Г.',
+     'Петр Петрович Петров',
+     'автору проекта "Галактический транспортный надзор" Петру Петровичу Петрову',
+     '02.02.2222 г.',
+     'kosmos1');

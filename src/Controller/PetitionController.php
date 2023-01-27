@@ -2,33 +2,32 @@
 
 namespace App\Controller;
 
-use App\Entity\Petition;
 use App\Entity\Signature;
 use App\Repository\PetitionRepository;
 use App\Repository\SignatureRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PetitionController extends AbstractController
 {
-    #[Route('/{public_id}', name: 'app_petition_page')]
+    #[Route('/{petitionPublicId}', name: 'app_petition_page')]
     public function index(
-        string $public_id,
-        PetitionRepository $petitionRepository
+        string $petitionPublicId,
+        PetitionRepository $petitionRepository,
+        SignatureRepository $signatureRepository
     ): Response {
-        $petition = $petitionRepository->getPetitionByPublicId($public_id);
+        $petition = $petitionRepository->getPetitionByPublicId($petitionPublicId);
 
-        $signaturesCount = $petitionRepository->getSignatureCount($petition);
+        $signaturesCount = $signatureRepository->count(['petition' => $petition->getId()]);
 
         return $this->render('petition.html.twig', [
             'petition_id' => $petition->getId(),
+            'petition_public_id' => $petitionPublicId,
             'sitename' => $this->getParameter('app.sitename'),
             'siteurl' => $this->getParameter('app.siteurl'),
             'sitemail' => $this->getParameter('app.sitemail'),
@@ -42,9 +41,13 @@ class PetitionController extends AbstractController
         ]);
     }
 
-    #[Route('/{petition_id}/public-offer', name: 'app_public_offer', priority: 1)]
-    public function publicOffer(string $petition_id): Response
-    {
+    #[Route('/{petitionPublicId}/public-offer', name: 'app_public_offer', priority: 1)]
+    public function publicOffer(
+        string $petitionPublicId,
+        PetitionRepository $petitionRepository
+    ): Response {
+        $petition = $petitionRepository->getPetitionByPublicId($petitionPublicId);
+
         return $this->render('public_offer.html.twig', [
             'sitename' => $this->getParameter('app.sitename'),
             'siteurl' => $this->getParameter('app.siteurl'),
@@ -52,16 +55,17 @@ class PetitionController extends AbstractController
             'siteowner_who' => $this->getParameter('app.siteowner_who'),
             'siteowner_by_whom' => $this->getParameter('app.siteowner_by_whom'),
             'siteowner_birthdate' => $this->getParameter('app.siteowner_birthdate'),
-            'petition_autor_who' => $this->getParameter('app.petition_author_who'),
-            'petition_author_birthdate' => $this->getParameter('app.petition_author_birthdate'),
-            'petition_target' => $this->getParameter('app.petition_target'),
-            'petition_author_to_whom' => $this->getParameter('app.petition_author_to_whom'),
-            'petition_url' => $this->getParameter('app.siteurl') . $this->generateUrl('app_petition_page', ['petition_id' => $petition_id]),
+            'petition_autor_who' => $petition->getAuthor(),
+            'petition_author_birthdate' => $petition->getAuthorBirthdate(),
+            'petition_target' => $petition->getTarget(),
+            'petition_author_to_whom' => $petition->getAuthorToWhom(),
+            'petition_url' => $this->getParameter('app.siteurl') . $this->generateUrl('app_petition_page', ['petitionPublicId' => $petitionPublicId]),
         ]);
     }
 
-    #[Route('/{petition_id}/signature', name: 'app_petition_signature', methods: ['POST'], priority: 1)]
+    #[Route('/{petitionId}/signatures', name: 'app_petition_signatures', methods: ['POST'], priority: 1)]
     public function signature(
+        string $petitionId,
         Request $request,
         ValidatorInterface $validator,
         ManagerRegistry $doctrine,
@@ -78,7 +82,6 @@ class PetitionController extends AbstractController
         $signature->setSignatureWriting($request->get('signature_writing'));
         $signature->setSigningDate(new \DateTime('now'));
 
-        $petitionId = $request->get('petition_id');
         $petition = $petitionRepository->get($petitionId);
         $signature->setPetition($petition);
 

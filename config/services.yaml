@@ -10,6 +10,7 @@ parameters:
     app.siteowner_who: '%env(APP_SITEOWNER_WHO)%'
     app.siteowner_by_whom: '%env(APP_SITEOWNER_BY_WHOM)%'
     app.siteowner_birthdate: '%env(APP_SITEOWNER_BIRTHDATE)%'
+    app.main_page_petition_id: '%env(APP_MAIN_PAGE_PETITION_ID)%'
 
 services:
     # default configuration for services in *this* file
