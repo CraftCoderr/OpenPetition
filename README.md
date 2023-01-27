@@ -16,7 +16,7 @@ Docker setup based on [Symfony Docker](https://github.com/dunglas/symfony-docker
 
 *If debugging doesn't work, check your firewall settings. Access to port 9003 must be allowed.*
 
-### Admin guide
+## Setup guide
 
 #### Importing example petition
 
