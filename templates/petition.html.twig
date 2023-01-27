@@ -151,7 +151,7 @@
 	</head>
 	<body>
 		<div class="container-fluid">
-			<form id="petitionForm" action={{ url('app_petition_signature', {petition_id: petition_id}) }}>
+			<form id="petitionForm" action={{ url('app_petition_signatures', {petitionId: petition_id}) }}>
 				<div class="row">
 					<div class="col-md-6 py-5 px-5" style="background-color: #5aa9e6">
 						<h1>
@@ -219,7 +219,7 @@
 							<div class="col-md-7 mt-2">
 								<p>Я даю согласие на обработку персональных данных и поручаю {{ petition_author_to_whom }}
 								подать мое обращение в {{ petition_target }} на основании
-								<a target="_blank" rel="noopener noreferrer" href="{{ url('app_public_offer', {petition_id: petition_id}) }}">публичной оферты</a></p>
+								<a target="_blank" rel="noopener noreferrer" href="{{ url('app_public_offer', {petitionPublicId: petition_public_id}) }}">публичной оферты</a></p>
 							</div>
 						</div>
 					</div>
@@ -340,23 +340,23 @@
 
 			processing = true;
 
-			signatureRequest = {
+			const signatureRequest = {
 				url: form.action,
 				type: "POST",
 				dataType: 'json',
-            	contentType: 'application/json',
+				contentType: 'application/json',
 				success: onSuccess,
 				error: onError
-			}
+			};
 
-			requestData = {}
+			const requestData = {};
 
 			let fullnameParsed = parseFullName(normalizeString(form["fullname"].value));
 
-			if (fullnameParsed.length == 2) {
+			if (fullnameParsed.length === 2) {
 				requestData.name = fullnameParsed[0];
 				requestData.surname = fullnameParsed[1];
-			} else if (fullnameParsed.length == 3) {
+			} else if (fullnameParsed.length === 3) {
 				requestData.name = fullnameParsed[0];
 				requestData.surname = fullnameParsed[1];
 				requestData.patronymic = fullnameParsed[2];
@@ -368,8 +368,7 @@
 			signatureRequest.data = JSON.stringify(requestData);
 
 			$.ajax(signatureRequest);
-			return;
-		};
+		}
 
 		// Validation
 		jQuery.validator.addMethod("signature", function(value, element, options) {

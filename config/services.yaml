@@ -10,15 +10,7 @@ parameters:
     app.siteowner_who: '%env(APP_SITEOWNER_WHO)%'
     app.siteowner_by_whom: '%env(APP_SITEOWNER_BY_WHOM)%'
     app.siteowner_birthdate: '%env(APP_SITEOWNER_BIRTHDATE)%'
-    app.petition_id: '%env(APP_PETITION_ID)%'
-    app.petition_author_who: '%env(APP_PETITION_AUTHOR_WHO)%'
-    app.petition_author_to_whom: '%env(APP_PETITION_AUTHOR_TO_WHOM)%'
-    app.petition_author_birthdate: '%env(APP_PETITION_AUTHOR_BIRTHDATE)%'
-    app.petition_target: '%env(APP_PETITION_TARGET)%'
-    app.petition_title: '%env(APP_PETITION_TITLE)%'
-    app.petition_subtitle: '%env(APP_PETITION_SUBTITLE)%'
-    app.petition_target_to_whom: '%env(APP_PETITION_TARGET_TO_WHOM)%'
-    app.petition_text_file: 'petition.md'
+    app.main_page_petition_id: '%env(APP_MAIN_PAGE_PETITION_ID)%'
 
 services:
     # default configuration for services in *this* file

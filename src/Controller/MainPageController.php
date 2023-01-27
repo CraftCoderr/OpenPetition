@@ -11,6 +11,6 @@ class MainPageController extends AbstractController
     #[Route('/', name: 'app_main_page')]
     public function index(): Response
     {
-        return $this->redirectToRoute('app_petition_page', ["petition_id" => $this->getParameter('app.petition_id')]);
+        return $this->redirectToRoute('app_petition_page', ["petitionPublicId" => $this->getParameter('app.main_page_petition_id')]);
     }
 }
