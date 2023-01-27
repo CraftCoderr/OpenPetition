@@ -21,7 +21,7 @@ class PetitionController extends AbstractController
         PetitionRepository $petitionRepository,
         SignatureRepository $signatureRepository
     ): Response {
-        $petition = $petitionRepository->getPetitionByPublicId($petitionPublicId);
+        $petition = $petitionRepository->getByPublicId($petitionPublicId);
 
         $signaturesCount = $signatureRepository->count(['petition' => $petition->getId()]);
 
@@ -46,7 +46,7 @@ class PetitionController extends AbstractController
         string $petitionPublicId,
         PetitionRepository $petitionRepository
     ): Response {
-        $petition = $petitionRepository->getPetitionByPublicId($petitionPublicId);
+        $petition = $petitionRepository->getByPublicId($petitionPublicId);
 
         return $this->render('public_offer.html.twig', [
             'sitename' => $this->getParameter('app.sitename'),

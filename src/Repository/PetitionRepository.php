@@ -28,7 +28,7 @@ class PetitionRepository extends ServiceEntityRepository
     /**
      * @throws EntityNotFoundException
      */
-    public function getPetitionByPublicId(string $publicId): Petition
+    public function getByPublicId(string $publicId): Petition
     {
         $entity = $this->findOneBy(['public_id' => $publicId]);
 
@@ -51,21 +51,6 @@ class PetitionRepository extends ServiceEntityRepository
         }
 
         return $entity;
-    }
-
-    /**
-     * @throws NonUniqueResultException
-     * @throws NoResultException
-     */
-    public function getSignatureCount(Petition $petition)
-    {
-        $qb = $this->createQueryBuilder('p')
-            ->select('COUNT(s.id)')
-            ->join('p.signatures', 's')
-            ->where('p = :petition')
-            ->setParameter('petition', $petition);
-
-        return $qb->getQuery()->getSingleScalarResult();
     }
 
     public function save(Petition $entity, bool $flush = false): void
