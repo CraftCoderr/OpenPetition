@@ -79,7 +79,7 @@ class PetitionController extends AbstractController
         if ($petition->isClosed()) {
             return new JsonResponse([
                 'message' => (string) 'Petition closed'
-            ], 500);
+            ], 400);
         }
 
         $signature = new Signature;
