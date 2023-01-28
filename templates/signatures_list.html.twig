@@ -39,12 +39,12 @@
             position: relative;
         }
 
-        div.signature_writing {
+        .signature_writing {
             position: absolute;
-            top: -15px;
-            background-size: cover;
-            height: 92px;
-            width: 200px;
+            top: -6px;
+            min-height: 58px;
+            max-height: 70px;
+            max-width: 200px;
         }
 
         th.number {
@@ -97,7 +97,7 @@
                 <td>{{ signature.number }}</td>
                 <td>{{ signature.name }} {{ signature.surname }} {{ signature.patronymic }}</td>
                 <td>{{ signature.signing_date }}</td>
-                <td class="signature_writing_cell"><div class="signature_writing" style="background-image: url({{ signature.signature_writing }});"></td>
+                <td class="signature_writing_cell"><img class="signature_writing" src="{{ signature.signature_writing }}"></td>
             </tr>
         {% endfor %}
         </tbody>
