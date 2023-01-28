@@ -141,6 +141,10 @@
 				opacity: .8;
 			}
 
+			.submit-button:disabled {
+				opacity: 1;
+			}
+
 			.submit-button:hover {
 				opacity: 1;
 			}
@@ -214,7 +218,7 @@
 					<div class="col-xl-8">
 						<div class="row py-3 px-2" style="background-color: #ebebeb;">
 							<div class="col-md-5 my-auto">
-								<input class="py-2 submit-button" type="submit" value="Подписать обращение"></input>
+								<input class="py-2 submit-button" type="submit" value="Подписать обращение" {% if petition_is_closed %}disabled{% endif %}></input>
 							</div>
 							<div class="col-md-7 mt-2">
 								<p>Я даю согласие на обработку персональных данных и поручаю {{ petition_author_to_whom }}
@@ -275,6 +279,21 @@
 					<div class="modal-body py-5">
 						При отправке подписи произошла ошибка, попробуйте отправить еще раз или перезагрузить страницу.
 						Если не помогает, обратитесь к администратору сайта.
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="closedModal" tabindex="-1" role="dialog" aria-labelledby="closedModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+					</div>
+					<div class="modal-body py-5 text-center">
+						Сбор подписей завершен, новые подписи не принимаются
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -411,5 +430,12 @@
 		window.addEventListener("resize", resizeCanvas);
 		resizeCanvas();
 		</script>
+		{% if petition_is_closed %}
+			<script>
+				addEventListener("load", (event) => {
+					$("#closedModal").modal('show');
+				});
+			</script>
+		{% endif %}
 	</body>
 </html>

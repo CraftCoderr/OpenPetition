@@ -16,6 +16,9 @@ class Petition
     #[ORM\Column]
     private int $id;
 
+    #[ORM\Column(options: ["default" => false])]
+    private bool $closed = false;
+
     #[ORM\Column(type: Types::TEXT)]
     private string $title;
 
@@ -61,6 +64,22 @@ class Petition
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * Get the value of closed
+     */
+    public function isClosed() : bool
+    {
+        return $this->closed;
+    }
+
+    /**
+     * Set the value of closed
+     */
+    public function setClosed($closed)
+    {
+        $this->closed = $closed;
     }
 
     /**
