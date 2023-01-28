@@ -28,6 +28,7 @@ class PetitionController extends AbstractController
         return $this->render('petition.html.twig', [
             'petition_id' => $petition->getId(),
             'petition_public_id' => $petitionPublicId,
+            'petition_is_closed' => $petition->isClosed(),
             'sitename' => $this->getParameter('app.sitename'),
             'siteurl' => $this->getParameter('app.siteurl'),
             'sitemail' => $this->getParameter('app.sitemail'),
@@ -73,6 +74,14 @@ class PetitionController extends AbstractController
     ): JsonResponse {
         $entityManager = $doctrine->getManager();
 
+        $petition = $petitionRepository->get($petitionId);
+
+        if ($petition->isClosed()) {
+            return new JsonResponse([
+                'message' => (string) 'Petition closed'
+            ], 400);
+        }
+
         $signature = new Signature;
 
         $signature->setName($request->get('name'));
@@ -82,7 +91,6 @@ class PetitionController extends AbstractController
         $signature->setSignatureWriting($request->get('signature_writing'));
         $signature->setSigningDate(new \DateTime('now'));
 
-        $petition = $petitionRepository->get($petitionId);
         $signature->setPetition($petition);
 
         $errors = $validator->validate($signature);
