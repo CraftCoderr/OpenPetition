@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 
+{% set header_margin = 28 %}
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +20,6 @@
         }
 
         table {
-            margin-top: 24px;
             border-collapse: collapse;
             width: 100%;
         }
@@ -64,23 +65,20 @@
         }
 
         @page {
-            margin-top: 256px;
+            margin-top: {{ (header_margin + header_height + header_margin) }}px;
         }
         header {
             position: fixed;
-            top: -216px;
+            top: {{ -(header_height + header_margin) }}px;
             left: 0px;
             right: 0px;
-            height: 50px;
         }
     </style>
 </head>
 <body>
     <header>
         <h1 class="page-number">Подписной лист №</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam nisi voluptates commodi
-        fugiat, recusandae voluptatem. Assumenda, necessitatibus! Ipsum unde debitis minus. Quos id
-        eos maxime fugiat quisquam reiciendis vero iusto.</p>
+        <p>{{ text }}</p>
     </header>
     <table>
         <thead>
@@ -102,5 +100,6 @@
         {% endfor %}
         </tbody>
     </table>
+    <p>Всего {{ signatures|length }} подписей на <span class="page-number"></span> листах.</p>
 </body>
 </html>
