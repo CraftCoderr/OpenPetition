@@ -31,11 +31,12 @@ class PdfGenerationService
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function generate(array $signatures): string
+    public function generate(int $headerHeight, string $text, array $signatures): string
     {
         $formattedSignatures = $this->formatData($signatures);
 
-        $html = $this->twig->render('signatures_list.html.twig', ['signatures' => $formattedSignatures] );
+        $html = $this->twig->render(
+            'signatures_list.html.twig', [ 'header_height' => $headerHeight, 'text' => $text, 'signatures' => $formattedSignatures]);
 
         $tmp = sys_get_temp_dir();
 
