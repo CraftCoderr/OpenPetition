@@ -3,6 +3,5 @@ version: "3"
 services:
   selenium:
     image: selenium/standalone-chrome:3.141.59
-    container_name: openpetition-selenium-server
     logging:
       driver: none
