@@ -109,7 +109,6 @@ class PetitionPage
             ->moveByOffset(0, -100)
             ->release()
             ->perform();
-        $this->remoteWebDriver->takeScreenshot("test.png");
     }
 
     /**
