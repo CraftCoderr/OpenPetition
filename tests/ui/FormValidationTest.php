@@ -92,7 +92,8 @@ class FormValidationTest extends TestCase
         $this->petitionPage->fillEmailInput($positiveData["email"]);
         $this->petitionPage->fillSignatureInput();
         $this->petitionPage->clickOnSubmitButton();
-        $this->assertSame(petitionPage::getSuccessfullyMessages()["sign_success"], $this->petitionPage->getSuccessfullyMessage());
+
+        $this->assertSame(petitionPage::getSuccessfullyMessages()["sign_success_msg"], $this->petitionPage->getSuccessfullyMessage());
     }
 
     public function tearDown(): void
