@@ -6,6 +6,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
+        "php": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^2.7",
@@ -81,7 +82,6 @@
         }
     },
     "require-dev": {
-        "php": "*",
         "php-webdriver/webdriver": "^1.13",
         "phpunit/phpunit": "^10.0",
         "roave/security-advisories": "dev-latest",

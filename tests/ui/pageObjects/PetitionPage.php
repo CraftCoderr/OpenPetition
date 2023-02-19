@@ -44,7 +44,7 @@ class PetitionPage
     public static function getSuccessfullyMessages(): array
     {
         return [
-            "sign_success_msg" => "Ваша подпись принята"
+            "sign_successfully_msg" => "Ваша подпись принята"
         ];
     }
 

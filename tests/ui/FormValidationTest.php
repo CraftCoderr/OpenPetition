@@ -8,6 +8,7 @@ use Facebook\WebDriver\Exception\TimeoutException;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
 class FormValidationTest extends TestCase
@@ -28,6 +29,7 @@ class FormValidationTest extends TestCase
      * @throws TimeoutException
      */
     #[DataProvider('fullNameAdditionProvider')]
+    #[TestDox('Filling full name: [$fullName] Expected: [$expected]')]
     public function testFullNameValidation($fullName, $expected): void
     {
         $this->petitionPage->fillFullNameInput($fullName);
@@ -36,7 +38,7 @@ class FormValidationTest extends TestCase
         $this->assertSame($expected, $this->petitionPage->getFullNameErrorMessage());
     }
 
-    public static function fullNameAdditionProvider() : array
+    public static function fullNameAdditionProvider(): array
     {
         return [
             ["", petitionPage::getErrorMessages()["empty_field_msg"]],
@@ -51,15 +53,16 @@ class FormValidationTest extends TestCase
      * @throws TimeoutException
      */
     #[DataProvider('emailAdditionProvider')]
-    public function testEmailValidation($fullName, $expected): void
+    #[TestDox('Filling email: [$email] Expected: [$expected]')]
+    public function testEmailValidation($email, $expected): void
     {
-        $this->petitionPage->fillEmailInput($fullName);
+        $this->petitionPage->fillEmailInput($email);
         $this->petitionPage->clickOnSubmitButton();
 
         $this->assertSame($expected, $this->petitionPage->getEmailErrorMessage());
     }
 
-    public static function emailAdditionProvider() : array
+    public static function emailAdditionProvider(): array
     {
         return [
             ["", petitionPage::getErrorMessages()["empty_field_msg"]],
@@ -85,6 +88,7 @@ class FormValidationTest extends TestCase
      * @throws NoSuchElementException
      * @throws TimeoutException
      */
+    #[TestDox('Filling all field positive data and sign')]
     public function testFillingOfPositiveData()
     {
         $positiveData = ["full_name" => "autotest autotest", "email" => "autotest@gmail.com"];
@@ -93,7 +97,8 @@ class FormValidationTest extends TestCase
         $this->petitionPage->fillSignatureInput();
         $this->petitionPage->clickOnSubmitButton();
 
-        $this->assertSame(petitionPage::getSuccessfullyMessages()["sign_success_msg"], $this->petitionPage->getSuccessfullyMessage());
+        $this->assertSame(petitionPage::getSuccessfullyMessages()["sign_successfully_msg"],
+            $this->petitionPage->getSuccessfullyMessage());
     }
 
     public function tearDown(): void
