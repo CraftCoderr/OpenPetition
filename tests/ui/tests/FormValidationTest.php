@@ -1,26 +1,24 @@
 <?php
 
-namespace App\Tests\ui;
+namespace App\Tests\ui\tests;
 
+use App\Tests\ui\BaseTest;
 use App\Tests\ui\pageObjects\PetitionPage;
 use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\Exception\TimeoutException;
-use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestDox;
-use PHPUnit\Framework\TestCase;
 
-class FormValidationTest extends TestCase
+class FormValidationTest extends BaseTest
 {
-    private const selenium_server_url = "http://selenium:4444/wd/hub";
     private RemoteWebDriver $driver;
     private PetitionPage $petitionPage;
 
     public function setUp(): void
     {
-        $this->driver = RemoteWebDriver::create(self::selenium_server_url, DesiredCapabilities::chrome());
-        $this->driver->get("http://caddy/kosmos1");
+        $this->driver = $this->getRemoteDriver();
+        $this->driver->get($this->getBaseURL());
         $this->petitionPage = new PetitionPage($this->driver);
     }
 
