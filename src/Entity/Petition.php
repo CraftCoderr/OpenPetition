@@ -49,6 +49,32 @@ class Petition
     #[ORM\Column(length: 255, unique: true)]
     private string $public_id;
 
+    /**
+     * @param bool $closed
+     * @param string $title
+     * @param string $subtitle
+     * @param string $text
+     * @param string $target
+     * @param string $target_to_whom
+     * @param string $author
+     * @param string $author_to_whom
+     * @param string $author_birthdate
+     * @param string $public_id
+     */
+    public function __construct(bool $closed, string $title, string $subtitle, string $text, string $target, string $target_to_whom, string $author, string $author_to_whom, string $author_birthdate, string $public_id)
+    {
+        $this->closed = $closed;
+        $this->title = $title;
+        $this->subtitle = $subtitle;
+        $this->text = $text;
+        $this->target = $target;
+        $this->target_to_whom = $target_to_whom;
+        $this->author = $author;
+        $this->author_to_whom = $author_to_whom;
+        $this->author_birthdate = $author_birthdate;
+        $this->public_id = $public_id;
+    }
+
     public function getSignatures(): Collection
     {
         return $this->signatures;

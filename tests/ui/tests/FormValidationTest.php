@@ -3,7 +3,10 @@
 namespace App\Tests\ui\tests;
 
 use App\Tests\ui\BaseTest;
+use App\Tests\ui\helpers\DBHelper;
 use App\Tests\ui\pageObjects\PetitionPage;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\Exception\TimeoutException;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
@@ -14,9 +17,21 @@ class FormValidationTest extends BaseTest
 {
     private RemoteWebDriver $driver;
     private PetitionPage $petitionPage;
+    private static DBHelper $dbHelper;
 
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+        self::$dbHelper = new DBHelper(self::getEntityManager());
+    }
+
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
     public function setUp(): void
     {
+        self::$dbHelper->addPetition();
         $this->driver = $this->getRemoteDriver();
         $this->driver->get($this->getBaseURL());
         $this->petitionPage = new PetitionPage($this->driver);
@@ -103,5 +118,4 @@ class FormValidationTest extends BaseTest
     {
         $this->driver->quit();
     }
-
 }
