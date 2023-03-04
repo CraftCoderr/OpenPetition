@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Tests\ui;
+namespace App\Tests\ui\helpers;
 
 use Dotenv\Dotenv;
 use OutOfBoundsException;
 
-class EnvTestContainer
+class EnvTestHelper
 {
     private Dotenv $dotenv;
 
