@@ -56,8 +56,8 @@ class FormValidationTest extends BaseTest
         return [
             ["", petitionPage::getErrorMessages()["empty_field_msg"]],
             [" autotest", petitionPage::getErrorMessages()["full_name_error_msg"]],
-            ["autotest ", petitionPage::getErrorMessages()["full_name_error_msg"]],
-            ["autotest", petitionPage::getErrorMessages()["full_name_error_msg"]],
+            ["autotest  ", petitionPage::getErrorMessages()["full_name_error_msg"]],
+            ["  autotest", petitionPage::getErrorMessages()["full_name_error_msg"]],
         ];
     }
 
@@ -81,7 +81,7 @@ class FormValidationTest extends BaseTest
             ["", petitionPage::getErrorMessages()["empty_field_msg"]],
             ["autotest", petitionPage::getErrorMessages()["email_error_msg"]],
             ["autotest@", petitionPage::getErrorMessages()["email_error_msg"]],
-            ["autotest@ ", petitionPage::getErrorMessages()["email_error_msg"]],
+            ["@autotest", petitionPage::getErrorMessages()["email_error_msg"]],
             [" autotest@ ", petitionPage::getErrorMessages()["email_error_msg"]],
         ];
     }
