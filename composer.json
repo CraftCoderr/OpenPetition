@@ -82,8 +82,14 @@
         }
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest"
-        ,
-        "symfony/maker-bundle": "^1.48"
+        "ext-mysqli": "*",
+        "php-webdriver/webdriver": "^1.13",
+        "phpunit/phpunit": "^10.0",
+        "roave/security-advisories": "dev-latest",
+        "symfony/browser-kit": "6.1.*",
+        "symfony/css-selector": "6.1.*",
+        "symfony/maker-bundle": "^1.48",
+        "symfony/phpunit-bridge": "^6.2",
+        "vlucas/phpdotenv": "^5.5"
     }
 }
