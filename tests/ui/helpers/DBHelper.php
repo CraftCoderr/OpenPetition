@@ -25,9 +25,17 @@ class DBHelper
         $jsonString = file_get_contents(__DIR__ . "/../resources/petition.json");
         $dataForPetition = json_decode($jsonString, true);
 
-        $petition = new Petition($dataForPetition["closed"], $dataForPetition["title"], $dataForPetition["subtitle"],
-            $dataForPetition["text"], $dataForPetition["target"], $dataForPetition["target_to_whom"], $dataForPetition["author"],
-            $dataForPetition["author_to_whom"], $dataForPetition["author_birthdate"], $dataForPetition["public_id"]);
+        $petition = new Petition();
+        $petition->setClosed($dataForPetition["closed"]);
+        $petition->setTitle($dataForPetition["title"]);
+        $petition->setSubtitle($dataForPetition["subtitle"]);
+        $petition->setText($dataForPetition["text"]);
+        $petition->setTarget($dataForPetition["target"]);
+        $petition->setTargetToWhom($dataForPetition["target_to_whom"]);
+        $petition->setAuthor($dataForPetition["author"]);
+        $petition->setAuthorToWhom($dataForPetition["author_to_whom"]);
+        $petition->setAuthorBirthdate($dataForPetition["author_birthdate"]);
+        $petition->setPublicId($dataForPetition["public_id"]);
 
         if (!$this->isPetitionExist()) {
             $this->entityManager->persist($petition);
